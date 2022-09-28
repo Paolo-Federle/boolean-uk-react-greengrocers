@@ -1,6 +1,6 @@
 import './styles/reset.css'
 import './styles/index.css'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import initialStoreItems from './store-items'
 
 // console.log(initialStoreItems)
@@ -8,6 +8,8 @@ import initialStoreItems from './store-items'
 export default function App() {
 
   const [food, setCart] = useState(initialStoreItems)
+
+  const inputRef = useRef()
 
   function addType() {
     food.forEach((item) => {
@@ -27,11 +29,11 @@ export default function App() {
 
   const getSearchedItem = (items, search) => {
     // console.log("filteredStore:", filteredStore)
-    console.log("search:", search)
+    // console.log("search:", search)
     const newFilteredStore = items.filter(item =>
       item.name.toLowerCase().includes(search.toLowerCase())
     )
-    console.log("newFilteredStore:", newFilteredStore)
+    // console.log("newFilteredStore:", newFilteredStore)
     return newFilteredStore
   }
 
@@ -42,7 +44,8 @@ export default function App() {
 
   function filterByType(type) {
     if (type === "all") {
-      setCart(initialStoreItems)
+      setSearch("")
+      return setCart(initialStoreItems)
     } else{
     const showType = initialStoreItems.filter(item =>
       item.type === type
@@ -131,6 +134,7 @@ export default function App() {
     setCart (filteredItems.sort(dynamicSort("price", "descending")))
   }
 
+  console.log(`input= ${inputRef.current?.value}`)
 
   return (
     <>
@@ -139,8 +143,8 @@ export default function App() {
         <div className='store--item-list'>
         <button onClick={() => filterByType("fruit")}>Show Fruits</button>
         <button onClick={() => filterByType("vegetable")}>Show Vegetables</button>
-        <button onClick={() => filterByType(("all"))}>Show All</button>
-        <input placeholder="Name" onChange={e => setSearch(e.target.value)} />
+        <button onClick={() => filterByType(("all"))}>Clear filters</button>
+        <input placeholder="Name" ref={inputRef} value={search} onChange={e => setSearch(e.target.value)} />
         </div><br></br>
         <div className='store--item-list'>
         <button onClick={sortAtoZ}>Sort A-Z</button>
