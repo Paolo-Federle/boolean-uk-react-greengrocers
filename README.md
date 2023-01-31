@@ -40,3 +40,5 @@ Reusing an exercise that you already know will help you understand the fundament
 ## Extension 2
 
 - Add a new detail component for each of the items, and render it conditionally after clicking on an item
+
+## [Final Output](https://greengrocers-silk.vercel.app/)
